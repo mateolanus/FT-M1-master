@@ -47,15 +47,16 @@ function cacheFunction(cb) {
   squareCache(5)    // no volverá a invocar a square, simplemente buscará en la caché cuál es el resultado de square(5) y lo retornará (tip: si usaste un objeto, podés usar hasOwnProperty) 
 
   */
-  const cache = {} // defino un obj cache con null props
-  return function (arg){ //el retorno de la funcion closure que toma el argumento arg e invoca a cb
-      if(cache.hasOwnProperty(arg)){ //hasOwnProperty consulta en el obj cache si tiene el argumento arg. Si lo tiene da true, sino false. Al comienzo no lo tiene, da false y va al else.
-      return cache[arg] //retorna el val de la propiedad arg del obj cache
-    }else {
-      let result = cb(arg) //result es una instancia de cb con el argumento arg.
-      cache[arg] = result //el
-      return cache[arg]
-    }  
+  
+  var cache = {} //3-creo el obj vacio donde cada prop será un arg, y el val de la prop es el resultado
+  return function(arg) {//1-es la func que se retorna y que acepta al arg arg
+    if(cache.hasOwnProperty(arg)) {//4- me pregunto si dentro del objeto cache ya existe la prop arg
+      return cache[arg] //4a- si E devuelve el val de cache asociado al arg invocado 
+    } else {
+      cache[arg] = cb(arg) //4b- Si no E, le asigno la invocac a cb con el arg
+      return cache[arg]; //retorno el val de cache asociado al arg invocado.
+    }
+    // cb(arg) //2-es la invocacion a cb con el arg arg. Finalmente es reemplazado por el punto 4b
   }
 }
 
@@ -86,8 +87,8 @@ function getNombre() {
   Usando el método bind() guardar, en las dos variables declaradas a continuación, dos funciones que actúen como getNombre pero retornen el nombre del instructor y del alumno, respectivamente.
 */
 
-let getNombreInstructor = getNombre.bind(instructor);
-let getNombreAlumno = getNombre.bind(alumno);
+let getNombreInstructor = getNombre.bind(instructor)
+let getNombreAlumno = getNombre.bind(alumno)
 
 /*
   Ejercicio 4
@@ -104,7 +105,7 @@ let textoAsteriscos = crearCadena.bind(this, "*", "*");
 let textoGuiones = crearCadena.bind(this, "-", "-");
 let textoUnderscore = crearCadena.bind(this, "_", "_");
 
-// No modifiquen nada debajo de esta linea
+// No modifiquen nada debajo de esta l
 // --------------------------------
 
 module.exports = {

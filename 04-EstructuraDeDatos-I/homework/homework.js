@@ -1,5 +1,7 @@
 'use strict'
 
+const { size } = require("@11ty/eleventy/src/TemplateCache");
+
 /*
 Definir las funciones recursivas nFactorial y nFibonacci.
 
@@ -15,10 +17,17 @@ Como ejercicio adicional y completamente opcional, al terminar de resolver este 
 */
 
 function nFactorial(n) {
+  if(n < 0) return false;
+  else if(n === 0 || n === 1) return 1;
+  return n * nFactorial(n - 1);
 }
 
-function nFibonacci(n) {
+function nFibonacci(n) { // nfib = nfib (n-1) + nfib (n-2)
+  if (n < 0) return false;
+  else if (n < 2 ) return n; //si n=0 o n=1, devuelve n
+  return  nFibonacci(n - 1) + nFibonacci(n - 2);
 }
+
 
 /*
 Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde el primer elemento que ingresa es el primero que se quita. Definir los siguientes métodos:
@@ -29,9 +38,40 @@ Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde e
 Pueden utilizar class o función constructora.
 */
 
-function Queue() {
-
+class Queue {
+  constructor() {
+    this.arr = []; //estructura de tipo FIFO, entonces puedo usar un arr vacio para que cumple el size inicial 0 dentro de constructor
+  }
+  enqueue(valor) { // creo el met enqueue que toma un val dado y lo pushea
+    this.arr.push(valor);
+  }
+  dequeue() { // creo el met dequeue que toma el primer val del arr y lo shift. Pide el return del mismo
+    if (this.arr === [])
+      return undefined;
+    return this.arr.shift();
+  }
+  size() { //creo el met size que da el length del arr
+    return this.arr.length;
+  }
 }
+
+
+
+
+//---- De la forma func constructora y prototype
+// function Queue() {
+//   this.arr = []; //estructura de tipo FIFO, entonces puedo usar un arr vacio para que cumple el size inicial 0
+// }
+// Queue.prototype.enqueue = function (valor){
+//   this.arr.push(valor);
+//   }
+// Queue.prototype.dequeue = function() {
+//   if(this.arr === []) return undefined;
+//   return this.arr.shift();
+// }
+// Queue.prototype.size = function(){
+//   return this.arr.length;
+//   }
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
